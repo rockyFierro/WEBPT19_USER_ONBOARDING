@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 
 const formSchema = yup.object().shape({
-    
+    name: yup.string().required("Name is a required field."),
+    email: yup.string().email("Please, Use a valid address.").required("E-Mail is required to use service."),
+    password: yup.string("Do not use your dogs name.").required("Please enter your password."),
+    terms: yup.boolean().oneOf([true], "Agree before using service. Please read ALL TERMS")
 });
+
+/*each time the form value state gets updated (someone types in an input box) we check to see if its valid as stated in the formSchema which will allow disabled and enabling the button*/ 
+useEffect(() => {
+    console.log("changes made")
+    formSchema.isValid(formState.then(valid => {
+        console.log("valid?", valid)
+        setButtonDisabled(valid);
+    }));
+}, [formState]);
 
 
 const LoginForm = () => {
@@ -16,7 +28,7 @@ const LoginForm = () => {
         terms:false
     })
     //managing state for BUTTONS!!!
-    const [buttonDisabled, setButtonDisabled] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     {/**schema */}
 
     const inputChange =event=>{
@@ -35,7 +47,7 @@ return(
         {/*states/}
         {/*form goes here*/}
         <div>
-            <form onSubmit={console.log("submitted!")}>
+            <form>
                 <div>
                     <label htmlFor="name">Name: </label>
                     <input id="name" type="text" name="name" placeholder="type here please" value={formState.name} onChange={inputChange}/>
