@@ -20,13 +20,21 @@ useEffect(() => {
 
 const LoginForm = () => {
 
+    //state for errors
+    const [errors, setErrors] = useState({
+        name:"",
+        email:"",
+        password:"",
+        terms:""
+    });
+
     //managing state for INPUTS
     const [formState, setFormState] = useState({
         name:"",
         email:"",
         password:"",
         terms:false
-    })
+    });
     //managing state for BUTTONS!!!
     const [buttonDisabled, setButtonDisabled] = useState(false);
     {/**schema */}
@@ -39,7 +47,7 @@ const LoginForm = () => {
        }
        //validateChange(event)
        setFormState(newFormData);
-    }
+    };
 
 return(
     <div>
